@@ -1,28 +1,33 @@
-import { Component, OnInit, HostBinding } from '@angular/core';
+import { Component } from '@angular/core';
+import { Article } from './article.model';
 
 @Component({
   selector: 'app-article',
-  imports: [],
-  templateUrl: './article.component.html',
-  styleUrl: './article.component.css'
+  standalone:true,
+  imports: [Article],
+  templateUrl: './app.component.html',  // Template associato
+  styleUrls: ['./app.component.css']
 })
-export class ArticleComponent {
-  @HostBinding('attr.class') cssClass = 'card';
-  votes: number;
-  title: string;
-  link: string;
+export class AppComponent {
+  articles: Article[];  // Array di articoli
+
   constructor() {
-    this.title = 'Angular 2';
-    this.link = 'http://angular.io';
-    this.votes = 10;
+    // Inizializza una lista di articoli
+    this.articles = [
+      new Article('Angular 17', 'https://angular.io', 5),
+      new Article('Fullstack.io', 'https://fullstack.io', 3),
+      new Article('RxJS Docs', 'https://rxjs.dev', 2),
+    ];
   }
-  voteUp():Boolean { //Aggiunto tipo di ritorno
-    this.votes += 1;
-    return false; //Non propagare l'evento 
+
+  // Metodo chiamato alla submit del form
+  addArticle(title: HTMLInputElement, link: HTMLInputElement): boolean {
+    const newArticle = new Article(title.value, link.value); // Crea nuovo articolo
+    this.articles.push(newArticle);                          // Lo aggiunge all’elenco
+
+    // Pulisce i campi input
+    title.value = '';
+    link.value = '';
+    return false;  // Blocca la ricarica della pagina
   }
-  voteDown():Boolean{
-    this.votes -= 1;
-  return false; //Non propagare l'evento 
-  }
-  ngOnInit() {}
 }

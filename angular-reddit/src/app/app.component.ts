@@ -1,19 +1,26 @@
 import { Component } from '@angular/core';
-import { ArticleComponent } from './article/article.component';
+import { Article } from './article/article.model'; // <-- import this
 
 @Component({
   selector: 'app-root',
-  imports: [ArticleComponent],
+  standalone: true,
+  imports: [Article],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  title = 'angular-reddit';
+  articles:Article[];   // <-- component property
+  constructor(){
+    this.articles = [
+      new Article('Angular 2', 'http://angular.io', 3),
+      new Article('Fullstack', 'http://fullstack.io', 2),
+      new Article('Angular Homepage', 'http://angular.io', 1),
+    ];
+  }
+
   addArticle(title: HTMLInputElement, link: HTMLInputElement): boolean {
-    let t = title.value;
-    let v= link.value;
-    console.log(`Adding article title: `+t+ ` and link: `+ v);
-    console.log(`Adding article title: `+title.value+ ` and link: `+ link.value);
-    console.log(`Adding article title: ${title.value} and link: ${link.value}`);
+    this.articles.push(new Article('Angular 2', 'http://angular.io', 3));
     return false;
   }
 }
