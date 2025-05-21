@@ -1,26 +1,39 @@
 import { Component } from '@angular/core';
-import { Article } from './article/article.model'; // <-- import this
+import { Article } from './article/article.model';
+import { ArticleComponent } from './article/article.component';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [Article],
+  imports: [ArticleComponent, FormsModule, CommonModule],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'angular-reddit';
-  articles:Article[];   // <-- component property
-  constructor(){
+  newtitle = '';
+  newlink = '';
+
+  articles: Article[];
+
+  constructor() {
     this.articles = [
-      new Article('Angular 2', 'http://angular.io', 3),
-      new Article('Fullstack', 'http://fullstack.io', 2),
-      new Article('Angular Homepage', 'http://angular.io', 1),
+      new Article('Angular', 'https://angular.io', 3),
+      new Article('Fullstack', 'https://fullstack.io', 2),
+      new Article('Angular Homepage', 'https://angular.io', 1),
     ];
   }
 
-  addArticle(title: HTMLInputElement, link: HTMLInputElement): boolean {
-    this.articles.push(new Article('Angular 2', 'http://angular.io', 3));
-    return false;
+  addArticle(title: string, link: string): void {
+    if (title && link) {
+      this.articles.push(new Article(title, link));
+      this.newtitle = '';
+      this.newlink = '';
+    }
+  }
+
+  sortedArticles(): Article[] {
+    return this.articles.sort((a: Article, b: Article) => b.votes - a.votes);
   }
 }

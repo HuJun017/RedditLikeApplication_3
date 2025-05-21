@@ -1,17 +1,17 @@
-<div class="container">
-  <form class="mt-4 p-5 bg-secondary text-white rounded">
-      <h3 class="display-4">Add a Link</h3>
-      <div class="form-group">
-        <label for="title">Title:</label>
-        <input id="title" #newtitle class="form-control">
-      </div>
-      <div class="form-group">
-        <label for="link">Link:</label>
-        <input id="link" #newlink class="form-control">
-      </div>
-    <button (click)="addArticle(newtitle, newlink)" class="btn btn-primary">
-      Submit link
-    </button>
+<div class="container mt-4">
+  <form class="jumbotron p-4 mb-4 bg-light rounded" (ngSubmit)="addArticle(newtitle, newlink)">
+    <div class="form-group mb-3">
+      <label for="title" class="form-label">Title:</label>
+      <input id="title" [(ngModel)]="newtitle" name="title" class="form-control" required>
+    </div>
+    <div class="form-group mb-3">
+      <label for="link" class="form-label">Link:</label>
+      <input id="link" [(ngModel)]="newlink" name="link" class="form-control" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit Link</button>
   </form>
+
+  <div class="articles-container">
+    <app-article *ngFor="let art of sortedArticles()" [article]="art"></app-article>
+  </div>
 </div>
-<app-article class='card'></app-article>

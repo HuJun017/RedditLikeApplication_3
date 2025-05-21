@@ -1,12 +1,15 @@
 <div class="card-header">
   <h3>{{ article.votes }} Points</h3>
 </div>
+
 <div class="card-body">
-  <a href="{{ article.link }}"> {{ title }}</a>
+  <a [href]="article.link" target="_blank">{{ article.title }}</a>
+  <small class="text-muted d-block">{{ article.domain() }}</small>
 </div>
+
 <div class="card-footer">
-   <div class="btn-group">
-      <a href (click)="voteUp()" class="btn btn-secondary"> upvote </a>
-      <a href (click)="voteDown()" class="btn btn-secondary"> downvote </a>
+  <div class="btn-group">
+    <button (click)="voteUp()" class="btn btn-secondary">upvote</button>
+    <button (click)="voteDown()" class="btn btn-secondary">downvote</button>
   </div>
 </div>
